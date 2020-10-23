@@ -1,0 +1,30 @@
+<!-- Page -->
+<html>
+    <div id='messages'></div>
+</html>
+
+<!-- script -->
+<script>
+    const WSHOST = 'ws://localhost:3031'; // host address
+    const ws = new WebSocket(WSHOST); // new websocket
+    const messages = document.getElementById('messages'); // get the messages div
+
+    // function to create a message
+    const createMessage = (message) => {
+        let messageDiv = document.createElement('div');
+        messageDiv.innerHTML = message;
+        messages.append(messageDiv);
+    }
+
+    ws.onopen = (event) => {
+        createMessage('websocket opened');
+    }
+
+    ws.onmessage = (event) => {
+        createMessage(event.data);
+    }
+
+    ws.onclose = () => {
+        createMessage('websocket closed');
+    }
+</script>
